@@ -1,0 +1,124 @@
+@startuml
+class Critter {
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class Bear {
+    -boolean polar
+    -boolean slash
+    +Bear(boolean polar)
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class Tiger {
+    -int moves
+    -Color color
+    -Random rand
+    +Tiger()
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class WhiteTiger {
+    -boolean infected
+    +WhiteTiger()
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class Giant {
+    -int moves
+    -String[] names
+    +Giant()
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class NinjaCat {
+    +NinjaCat()
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class CritterModel {
+    -int height
+    -int width
+    -Critter[][] grid
+    -Map<Critter, PrivateData> info
+    -SortedMap<String, Integer> critterCount
+    -boolean debugView
+    -int simulationCount
+    +CritterModel(int width, int height)
+    +void add(int number, Class<? extends Critter> critter)
+    +void update()
+    +void updateColorString()
+    +Set<Map.Entry<String, Integer>> getCounts()
+    +int getSimulationCount()
+}
+
+class CritterFrame {
+    -CritterModel myModel
+    -CritterPanel myPicture
+    -javax.swing.Timer myTimer
+    -JButton[] counts
+    -JButton countButton
+    -boolean started
+    +CritterFrame(int width, int height)
+    +void start()
+    +void add(int number, Class<? extends Critter> c)
+    +void doOneStep()
+    +void multistep(int n)
+}
+
+class CritterPanel {
+    -CritterModel myModel
+    -Font myFont
+    +CritterPanel(CritterModel model)
+    +void paintComponent(Graphics g)
+}
+
+interface CritterInfo {
+    +Neighbor getFront()
+    +Neighbor getBack()
+    +Neighbor getLeft()
+    +Neighbor getRight()
+    +Direction getDirection()
+    +boolean frontThreat()
+    +boolean backThreat()
+    +boolean leftThreat()
+    +boolean rightThreat()
+}
+
+class FlyTrap {
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+class Food {
+    +Action getMove(CritterInfo info)
+    +Color getColor()
+    +String toString()
+}
+
+Critter <|-- Bear
+Critter <|-- Tiger
+Critter <|-- WhiteTiger
+Critter <|-- Giant
+Critter <|-- NinjaCat
+Critter <|-- FlyTrap
+Critter <|-- Food
+
+CritterModel --> Critter
+CritterFrame --> CritterModel
+CritterPanel --> CritterModel
+CritterModel --> CritterInfo
+@enduml
